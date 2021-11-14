@@ -1,0 +1,15 @@
+
+
+Create Tetris
+
+* Tetris rules 
+
+	[ 1 ] every x(1, 0.5, ...) sec move down 
+	[ 2 ] push left key move to left
+	[ 3 ] push right key move to right
+	[ 4 ] push up key rotate 90 degree
+	[ 5 ] push space move down to bottom
+
+[ 1 ] create Board
+
+[ 2 ] 

@@ -12,16 +12,45 @@
 }
 
 .row {
-  height: 50px;
+  height: 30px;
 }
 
 .cell {
-  width: 50px;
-  height: 50px;
+  width: 30px;
+  height: 30px;
   outline: 1px solid rgb(134, 154, 189);
   display: inline-block;
 }
 
-.x10 {
-  background-color: lightblue;
+span {
+  color: grey;
+  font-size: 14px;
+}
+
+.blockT {
+  background-color: #a000f1;
+}
+
+.blockZ {
+  background-color: #f00102;
+}
+
+.blockS {
+  background-color: #47f000;
+}
+
+.blockL {
+  background-color: #efa001;
+}
+
+.blockJ {
+  background-color: #1800ec;
+}
+
+.blockO {
+  background-color: #eff300;
+}
+
+.blockI {
+  background-color: #4ceff1;
 }
