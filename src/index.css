@@ -15,16 +15,15 @@
   height: 30px;
 }
 
+.col {
+  height: 30px;
+}
+
 .cell {
   width: 30px;
   height: 30px;
   outline: 1px solid rgb(134, 154, 189);
   display: inline-block;
-}
-
-span {
-  color: grey;
-  font-size: 14px;
 }
 
 .blockT {
@@ -52,5 +51,38 @@ span {
 }
 
 .blockI {
+  background-color: #4ceff1;
+}
+
+span {
+  height: 30px;
+  width: 30px;
+}
+
+.blockTFixed {
+  background-color: #a000f1;
+}
+
+.blockZFixed {
+  background-color: #f00102;
+}
+
+.blockSFixed {
+  background-color: #47f000;
+}
+
+.blockLFixed {
+  background-color: #efa001;
+}
+
+.blockJFixed {
+  background-color: #1800ec;
+}
+
+.blockOFixed {
+  background-color: #eff300;
+}
+
+.blockIFixed {
   background-color: #4ceff1;
 }
