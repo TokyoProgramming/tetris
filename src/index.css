@@ -22,67 +22,85 @@
 .cell {
   width: 30px;
   height: 30px;
-  outline: 1px solid rgb(134, 154, 189);
+  /* outline: 1px solid rgb(134, 154, 189); */
+  outline: 1px solid #006400;
   display: inline-block;
 }
 
 .blockT {
   background-color: #a000f1;
+  box-shadow: rgba(0, 0, 0, 0.35) 0px 2px 10px;
 }
 
 .blockZ {
   background-color: #f00102;
+  box-shadow: rgba(0, 0, 0, 0.35) 0px 2px 10px;
 }
-
 .blockS {
   background-color: #47f000;
+  box-shadow: rgba(0, 0, 0, 0.35) 0px 2px 10px;
 }
-
 .blockL {
   background-color: #efa001;
+  box-shadow: rgba(0, 0, 0, 0.35) 0px 2px 10px;
 }
-
 .blockJ {
-  background-color: #1800ec;
+  /* background-color: #1800ec; */
+  background-color: #8a2be2;
+  box-shadow: rgba(0, 0, 0, 0.35) 0px 2px 10px;
 }
-
 .blockO {
   background-color: #eff300;
+  box-shadow: rgba(0, 0, 0, 0.35) 0px 2px 10px;
 }
-
 .blockI {
   background-color: #4ceff1;
+  box-shadow: rgba(0, 0, 0, 0.35) 0px 2px 10px;
 }
-
 span {
   height: 30px;
   width: 30px;
 }
-
 .blockTFixed {
   background-color: #a000f1;
+  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
 }
 
 .blockZFixed {
   background-color: #f00102;
+  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
 }
 
 .blockSFixed {
   background-color: #47f000;
+  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
 }
 
 .blockLFixed {
   background-color: #efa001;
+  box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;
 }
 
 .blockJFixed {
-  background-color: #1800ec;
+  background-color: #8a2be2;
+  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
 }
 
 .blockOFixed {
   background-color: #eff300;
+  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
 }
 
 .blockIFixed {
   background-color: #4ceff1;
+  /* box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px; */
+  box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;
+}
+
+.row-0,
+.row-1,
+.row-2,
+.row-3,
+.row-24 {
+  background-color: #006400;
 }
