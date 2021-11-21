@@ -24,13 +24,23 @@ const blockController = (
       n = 0;
     } else if (direction === 'rotate') {
       targetArr = chooseTargetBlock(blockName, row, col, i, shape + 1);
+    } else if (direction === 'down') {
+      n = 0;
+      m = 1;
     }
 
     const targetCells = targetArr.map((val) => board[val.row + m][val.col + n]);
+
     const check = targetCells.every((el) => el === 0);
 
     if (check && direction === 'rotate') {
       targetArr.map((val) => (board[val.row][val.col] = blockName));
+    } else if (check && direction === 'down') {
+      targetArr.map((val) => (board[val.row][val.col] = blockName));
+      return 0;
+    } else if (!check && direction === 'down') {
+      targetArr.map((val) => (board[val.row][val.col] = blockName + 'Fixed'));
+      return 1;
     } else if (!check && direction === 'update') {
       targetArr.map((val) => (board[val.row][val.col] = blockName + 'Fixed'));
       return 1;

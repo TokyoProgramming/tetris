@@ -6,24 +6,20 @@ import { blockController } from './BlockController';
 const Board = () => {
   const BOARD_HEIGHT = 25;
   const BOARD_WIDTH = 12;
-  const [row, setRow] = useState(3);
+  const [row1, setRow1] = useState(3);
   const refRow = useRef(3);
   const refPosition = useRef(2);
   const [position, setPosition] = useState(2);
-
   const [board, setBoard] = useState(
     new Array(BOARD_HEIGHT).fill(10).map(() => new Array(BOARD_WIDTH).fill(0))
   );
+
   const [next, setNext] = useState(0);
   const refNext = useRef(0);
-
   const refShape = useRef(10);
-
   const [blockOrder, setBlockOrder] = useState(
-    Array.from({ length: 5 }, () => Math.floor(Math.random() * 7))
+    Array.from({ length: 1 }, () => Math.floor(Math.random() * 7))
   );
-  // const [blockOrder, setBlockOrder] = useState([0]);
-
   const [blocks, setBlocks] = useState([
     'blockI',
     'blockJ',
@@ -34,13 +30,14 @@ const Board = () => {
     'blockO',
   ]);
   const [order, setOrder] = useState(0);
+  const refOrderArray = useRef([]);
   const refOrder = useRef(0);
 
   const findTargetPieces = () => {
     let obj = {};
     let array = [];
-    for (let row = 0; row < 24; row++) {
-      for (let col = 0; col < 13; col++) {
+    for (let row = 0; row < BOARD_HEIGHT; row++) {
+      for (let col = 0; col < BOARD_WIDTH; col++) {
         let target = board[row][col];
         if (
           target === 'blockT' ||
@@ -68,7 +65,6 @@ const Board = () => {
     }
     const moveDirection = 'right';
     const currentShape = refShape.current;
-
     let res1 = blockController(
       board,
       blockName,
@@ -82,7 +78,6 @@ const Board = () => {
       setPosition((prevPosition) => prevPosition + 1);
       refPosition.current = refPosition.current + 1;
     }
-
     return res1;
   };
 
@@ -93,7 +88,6 @@ const Board = () => {
     }
     const moveDirection = 'left';
     const currentShape = refShape.current;
-
     let res1 = blockController(
       board,
       blockName,
@@ -110,15 +104,14 @@ const Board = () => {
     return res1;
   };
 
-  const rotatePiece = (currentRow, currentPosition, blockName) => {
+  const movePieceDown = (currentRow, currentPosition, blockName) => {
     let res = findTargetPieces();
     if (res.length !== 0) {
       res.forEach((j) => (board[j.row][j.col] = 0));
     }
+    const moveDirection = 'down';
     const currentShape = refShape.current;
-    const moveDirection = 'rotate';
-
-    blockController(
+    let res1 = blockController(
       board,
       blockName,
       currentRow,
@@ -128,20 +121,73 @@ const Board = () => {
       currentShape
     );
 
+    if (res1 === 0) {
+      setRow1((prevRow) => prevRow + 1);
+      refRow.current = refRow.current + 1;
+    }
+
+    return res1;
+  };
+
+  const rotatePiece = (currentRow, currentPosition, blockName) => {
+    let res = findTargetPieces();
+    if (res.length !== 0) {
+      res.forEach((j) => (board[j.row][j.col] = 0));
+    }
+    const currentShape = refShape.current;
+    const moveDirection = 'rotate';
+    blockController(
+      board,
+      blockName,
+      currentRow,
+      currentPosition,
+      0,
+      moveDirection,
+      currentShape
+    );
     refShape.current = refShape.current + 1;
+  };
+
+  const updatePiece = () => {
+    let res = findTargetPieces();
+    if (res.length !== 0) {
+      res.forEach((i) => {
+        board[i.row][i.col] = 0;
+      });
+    }
+
+    const moveDirection = 'update';
+
+    let currentPosition = refPosition.current;
+    let currentOrderArray = refOrderArray.current;
+    const num = currentOrderArray[order];
+    const blockName = blocks[num];
+    let currentRow = refRow.current;
+    const currentShape = refShape.current;
+    let result = blockController(
+      board,
+      blockName,
+      currentRow,
+      currentPosition,
+      0,
+      moveDirection,
+      currentShape
+    );
+    return result;
   };
 
   const listener = useCallback((e) => {
     let currentRow = refRow.current;
     let currentPosition = refPosition.current;
+    let currentOrderArray = refOrderArray.current;
     let currentOrder = refOrder.current;
-    let num = blockOrder[currentOrder];
-    let blockName = blocks[num];
+    const num = currentOrderArray[currentOrder];
+    const blockName = blocks[num];
+
     let k = 8;
     if (blockName === 'blockO') {
       k = 9;
     }
-
     if (
       e.code === 'ArrowRight' &&
       currentPosition < k &&
@@ -159,45 +205,30 @@ const Board = () => {
     } else if (e.code === 'ArrowUp') {
       e.preventDefault();
       rotatePiece(currentRow, currentPosition, blockName);
+    } else if (
+      e.code === 'ArrowDown' &&
+      currentRow < BOARD_HEIGHT &&
+      currentRow !== 3
+    ) {
+      console.log(currentRow);
+      e.preventDefault();
+      movePieceDown(currentRow, currentPosition, blockName);
     }
     // eslint-disable-next-line
   }, []);
 
-  const updatePiece = (currentPosition) => {
-    let res = findTargetPieces();
-    if (res.length !== 0) {
-      res.forEach((i) => {
-        board[i.row][i.col] = 0;
-      });
-    }
-    const moveDirection = 'update';
-    const num = blockOrder[order];
-    const blockName = blocks[num];
-    const currentShape = refShape.current;
-
-    let result = blockController(
-      board,
-      blockName,
-      row,
-      currentPosition,
-      0,
-      moveDirection,
-      currentShape
-    );
-    return result;
-  };
-
   const fixedPiece = (currentPosition) => {
-    const num = blockOrder[order];
+    let currentRow = refRow.current;
+    let currentOrderArray = refOrderArray.current;
+    const num = currentOrderArray[order];
     const blockName = blocks[num];
-    let rowNum = row - 1;
+
     const currentShape = refShape.current;
     const moveDirection = 'fixed';
-
     blockController(
       board,
       blockName,
-      rowNum,
+      currentRow - 1,
       currentPosition,
       0,
       moveDirection,
@@ -207,25 +238,27 @@ const Board = () => {
   };
 
   const initState = () => {
-    setRow(3);
+    setRow1(3);
     setOrder((prevOrder) => prevOrder + 1);
+    refOrder.current = refOrder.current + 1;
     refRow.current = 3;
     refPosition.current = 2;
-    refOrder.current = refOrder.current + 1;
     refNext.current = 0;
     setNext(0);
+    const num = Math.floor(Math.random() * 7);
+    setBlockOrder((prevArray) => [...prevArray, num]);
   };
 
   useEffect(() => {
     let interval;
     let res;
-    // initialBoard(board);
 
-    if (row < BOARD_HEIGHT - 1 && next === 0) {
+    if (row1 < BOARD_HEIGHT - 1 && next === 0) {
       interval = setInterval(() => {
-        let currentPosition = refPosition.current;
-        res = updatePiece(currentPosition, order);
-        setRow((prevRow) => prevRow + 1);
+        refOrderArray.current = blockOrder;
+
+        res = updatePiece();
+        setRow1((prevRow) => prevRow + 1);
         refRow.current = refRow.current + 1;
         setNext(res);
       }, 1000);
@@ -239,7 +272,7 @@ const Board = () => {
       clearInterval(interval);
     };
     // eslint-disable-next-line
-  }, [row, next]);
+  }, [row1, next]);
 
   return (
     <div className="board">
