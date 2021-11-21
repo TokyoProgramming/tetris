@@ -176,6 +176,74 @@ const Board = () => {
     return result;
   };
 
+  const gameOver = () => {
+    let obj = {};
+    let array = [];
+    for (let row = 0; row < BOARD_HEIGHT; row++) {
+      for (let col = 0; col < BOARD_WIDTH; col++) {
+        let target = board[row][col];
+        if (
+          target === 'blockTFixed' ||
+          target === 'blockZFixed' ||
+          target === 'blockSFixed' ||
+          target === 'blockLFixed' ||
+          target === 'blockJFixed' ||
+          target === 'blockOFixed' ||
+          target === 'blockIFixed'
+        ) {
+          obj = {};
+          obj.row = row;
+          array.push(obj);
+        }
+      }
+    }
+    const check = array.map((val) => val.row < 4);
+    const res = check.includes(true);
+    return res;
+  };
+
+  const checkLine = () => {
+    let array = [];
+
+    for (let row = 0; row < BOARD_HEIGHT; row++) {
+      for (let col = 0; col < BOARD_WIDTH; col++) {
+        let target = board[row][col];
+        if (
+          target === 'blockTFixed' ||
+          target === 'blockZFixed' ||
+          target === 'blockSFixed' ||
+          target === 'blockLFixed' ||
+          target === 'blockJFixed' ||
+          target === 'blockOFixed' ||
+          target === 'blockIFixed'
+        ) {
+          let obj = {};
+          if (array.length !== 0) {
+            const findRow = array.findIndex((obj) => obj.row === row);
+            if (findRow !== -1) {
+              let targetArr = array[findRow].col;
+              targetArr = targetArr.push(col);
+            } else {
+              obj = {
+                row: row,
+                col: [col],
+              };
+              array.push(obj);
+            }
+          } else {
+            obj = {
+              row: row,
+              col: [col],
+            };
+            array.push(obj);
+          }
+        }
+      }
+    }
+    console.log(array);
+    return array;
+  };
+
   const listener = useCallback((e) => {
     let currentRow = refRow.current;
     let currentPosition = refPosition.current;
@@ -210,9 +278,15 @@ const Board = () => {
       currentRow < BOARD_HEIGHT &&
       currentRow !== 3
     ) {
-      console.log(currentRow);
       e.preventDefault();
       movePieceDown(currentRow, currentPosition, blockName);
+    } else if (e.code === 'Space') {
+      e.preventDefault();
+      let rowNum = currentRow;
+      while (rowNum < BOARD_HEIGHT) {
+        movePieceDown(currentRow, currentPosition, blockName);
+        rowNum++;
+      }
     }
     // eslint-disable-next-line
   }, []);
@@ -263,6 +337,16 @@ const Board = () => {
         setNext(res);
       }, 1000);
     } else {
+      const game = gameOver();
+      checkLine();
+      if (game) {
+        setBoard(
+          new Array(BOARD_HEIGHT)
+            .fill(10)
+            .map(() => new Array(BOARD_WIDTH).fill(0))
+        );
+      }
+
       let currentPosition = refPosition.current;
       fixedPiece(currentPosition);
       initState();
