@@ -22,12 +22,12 @@ const Board = () => {
   );
   const [blocks, setBlocks] = useState([
     'blockI',
-    'blockJ',
     'blockL',
     'blockS',
-    'blockT',
-    'blockZ',
     'blockO',
+    'blockJ',
+    'blockZ',
+    'blockT',
   ]);
   const [order, setOrder] = useState(0);
   const refOrderArray = useRef([]);
@@ -240,8 +240,13 @@ const Board = () => {
         }
       }
     }
-    console.log(array);
-    return array;
+    const res = array.map((val) => {
+      let colArray = val.col;
+      let lineCheck = colArray.length;
+      return lineCheck === 10 ? val.row : null;
+    });
+
+    return res;
   };
 
   const listener = useCallback((e) => {
@@ -249,34 +254,79 @@ const Board = () => {
     let currentPosition = refPosition.current;
     let currentOrderArray = refOrderArray.current;
     let currentOrder = refOrder.current;
+    let currentShape = refShape.current;
     const num = currentOrderArray[currentOrder];
     const blockName = blocks[num];
+    let l = 2;
+    let k = 9;
 
-    let k = 8;
+    if (blockName === 'blockT') {
+      let shapeNum = currentShape % 4;
+      if (shapeNum === 1 || shapeNum === 3) {
+        l = 1;
+      }
+    } else if (blockName === 'blockJ') {
+      k = 8;
+      l = 1;
+      let shapeNum = currentShape % 4;
+      if (shapeNum === 1 || shapeNum === 3) {
+        k = 9;
+      }
+    } else if (blockName === 'blockZ') {
+      k = 8;
+      l = 1;
+
+      let shapeNum = currentShape % 2;
+      if (shapeNum === 1) {
+        k = 9;
+      }
+    } else if (blockName === 'blockS') {
+      let shapeNum = currentShape % 2;
+      if (shapeNum === 1) {
+        l = 1;
+      }
+    } else if (blockName === 'blockL') {
+      let shapeNum = currentShape % 4;
+      if (shapeNum === 1 || shapeNum === 3) {
+        l = 1;
+      }
+    } else if (blockName === 'blockI') {
+      let shapeNum = currentShape % 2;
+      if (shapeNum === 0) {
+        l = 1;
+        k = 7;
+      } else {
+        l = 0;
+      }
+    }
     if (blockName === 'blockO') {
       k = 9;
+      l = 1;
     }
     if (
       e.code === 'ArrowRight' &&
       currentPosition < k &&
-      currentRow < BOARD_HEIGHT
+      currentRow < BOARD_HEIGHT &&
+      blockName !== undefined
     ) {
       e.preventDefault();
       movePieceRight(currentRow, currentPosition, blockName);
     } else if (
       e.code === 'ArrowLeft' &&
-      currentPosition > 1 &&
-      currentRow < BOARD_HEIGHT
+      currentPosition > l &&
+      currentRow < BOARD_HEIGHT &&
+      blockName !== undefined
     ) {
       e.preventDefault();
       movePieceLeft(currentRow, currentPosition, blockName);
-    } else if (e.code === 'ArrowUp') {
+    } else if (e.code === 'ArrowUp' && blockName !== undefined) {
       e.preventDefault();
       rotatePiece(currentRow, currentPosition, blockName);
     } else if (
       e.code === 'ArrowDown' &&
       currentRow < BOARD_HEIGHT &&
-      currentRow !== 3
+      currentRow !== 3 &&
+      blockName !== undefined
     ) {
       e.preventDefault();
       movePieceDown(currentRow, currentPosition, blockName);
@@ -337,8 +387,11 @@ const Board = () => {
         setNext(res);
       }, 1000);
     } else {
+      let currentPosition = refPosition.current;
+      fixedPiece(currentPosition);
       const game = gameOver();
-      checkLine();
+      console.log(row1);
+
       if (game) {
         setBoard(
           new Array(BOARD_HEIGHT)
@@ -347,8 +400,8 @@ const Board = () => {
         );
       }
 
-      let currentPosition = refPosition.current;
-      fixedPiece(currentPosition);
+      const arr = checkLine();
+
       initState();
     }
     document.addEventListener('keydown', listener);

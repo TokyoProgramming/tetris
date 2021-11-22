@@ -3,26 +3,123 @@ const blockT = (rowPosition, colPosition, i = 0, shape) => {
   let shapeType = shape % 4;
 
   if (shapeType === 0) {
+    // 1 1 1
+    // 0 1 0
+    // 0 0 0
+    if (colPosition === 1) {
+      arr = [
+        {
+          row: rowPosition - 1,
+          col: colPosition + i + 1,
+        },
+        {
+          row: rowPosition,
+          col: colPosition + i + 1,
+        },
+        {
+          row: rowPosition,
+          col: colPosition + i + 2,
+        },
+        {
+          row: rowPosition,
+          col: colPosition + i,
+        },
+      ];
+    } else {
+      arr = [
+        {
+          row: rowPosition - 1,
+          col: colPosition + i,
+        },
+        {
+          row: rowPosition,
+          col: colPosition + i,
+        },
+        {
+          row: rowPosition,
+          col: colPosition + i + 1,
+        },
+        {
+          row: rowPosition,
+          col: colPosition + i - 1,
+        },
+      ];
+    }
+  } else if (shapeType === 1) {
+    // 0 1 0
+    // 0 1 1
+    // 0 1 0
     arr = [
+      {
+        row: rowPosition - 2,
+        col: colPosition + i,
+      },
+      {
+        row: rowPosition - 1,
+        col: colPosition + i,
+      },
       {
         row: rowPosition - 1,
         col: colPosition + i + 1,
       },
       {
         row: rowPosition,
-        col: colPosition + i + 1,
-      },
-      {
-        row: rowPosition,
-        col: colPosition + i + 2,
-      },
-      {
-        row: rowPosition,
         col: colPosition + i,
       },
     ];
-  } else if (shapeType === 1) {
+  } else if (shapeType === 2) {
+    // 0 1 0
+    // 1 1 1
+    // 0 0 0
+
+    if (colPosition === 1) {
+      arr = [
+        {
+          row: rowPosition,
+          col: colPosition + i + 1,
+        },
+        {
+          row: rowPosition - 1,
+          col: colPosition + i,
+        },
+        {
+          row: rowPosition - 1,
+          col: colPosition + i + 1,
+        },
+        {
+          row: rowPosition - 1,
+          col: colPosition + i + 2,
+        },
+      ];
+    } else {
+      arr = [
+        {
+          row: rowPosition,
+          col: colPosition + i,
+        },
+        {
+          row: rowPosition - 1,
+          col: colPosition + i - 1,
+        },
+        {
+          row: rowPosition - 1,
+          col: colPosition + i,
+        },
+        {
+          row: rowPosition - 1,
+          col: colPosition + i + 1,
+        },
+      ];
+    }
+  } else if (shapeType === 3) {
+    // - - *
+    // - * *
+    // - - *
     arr = [
+      {
+        row: rowPosition - 1,
+        col: colPosition + i,
+      },
       {
         row: rowPosition - 2,
         col: colPosition + i + 1,
@@ -32,50 +129,8 @@ const blockT = (rowPosition, colPosition, i = 0, shape) => {
         col: colPosition + i + 1,
       },
       {
-        row: rowPosition - 1,
-        col: colPosition + i + 2,
-      },
-      {
         row: rowPosition,
         col: colPosition + i + 1,
-      },
-    ];
-  } else if (shapeType === 2) {
-    arr = [
-      {
-        row: rowPosition,
-        col: colPosition + i + 1,
-      },
-      {
-        row: rowPosition - 1,
-        col: colPosition + i,
-      },
-      {
-        row: rowPosition - 1,
-        col: colPosition + i + 1,
-      },
-      {
-        row: rowPosition - 1,
-        col: colPosition + i + 2,
-      },
-    ];
-  } else if (shapeType === 3) {
-    arr = [
-      {
-        row: rowPosition - 1,
-        col: colPosition + i + 1,
-      },
-      {
-        row: rowPosition,
-        col: colPosition + i + 1,
-      },
-      {
-        row: rowPosition + 1,
-        col: colPosition + i + 1,
-      },
-      {
-        row: rowPosition,
-        col: colPosition + i,
       },
     ];
   }
@@ -87,25 +142,52 @@ const blockZ = (rowPosition, colPosition, i = 0, shape) => {
   let arr;
   let shapeType = shape % 2;
   if (shapeType === 0) {
-    arr = [
-      {
-        row: rowPosition - 1,
-        col: colPosition + i,
-      },
-      {
-        row: rowPosition - 1,
-        col: colPosition + i + 1,
-      },
-      {
-        row: rowPosition,
-        col: colPosition + i + 1,
-      },
-      {
-        row: rowPosition,
-        col: colPosition + i + 2,
-      },
-    ];
+    // 1 1 0
+    // 0 1 1
+    // 0 0 0
+    if (colPosition === 9) {
+      arr = [
+        {
+          row: rowPosition - 1,
+          col: colPosition + i - 1,
+        },
+        {
+          row: rowPosition - 1,
+          col: colPosition + i,
+        },
+        {
+          row: rowPosition,
+          col: colPosition + i,
+        },
+        {
+          row: rowPosition,
+          col: colPosition + i + 1,
+        },
+      ];
+    } else {
+      arr = [
+        {
+          row: rowPosition - 1,
+          col: colPosition + i,
+        },
+        {
+          row: rowPosition - 1,
+          col: colPosition + i + 1,
+        },
+        {
+          row: rowPosition,
+          col: colPosition + i + 1,
+        },
+        {
+          row: rowPosition,
+          col: colPosition + i + 2,
+        },
+      ];
+    }
   } else if (shapeType === 1) {
+    // 0 0 1
+    // 0 1 1
+    // 0 1 0
     arr = [
       {
         row: rowPosition - 1,
@@ -133,25 +215,52 @@ const blockS = (rowPosition, colPosition, i = 0, shape) => {
   let arr;
   let shapeType = shape % 2;
   if (shapeType === 0) {
-    arr = [
-      {
-        row: rowPosition - 1,
-        col: colPosition + i + 2,
-      },
-      {
-        row: rowPosition - 1,
-        col: colPosition + i + 1,
-      },
-      {
-        row: rowPosition,
-        col: colPosition + i,
-      },
-      {
-        row: rowPosition,
-        col: colPosition + i + 1,
-      },
-    ];
+    // 0 1 1
+    // 1 1 0
+    // 0 0 0
+    if (colPosition === 1) {
+      arr = [
+        {
+          row: rowPosition - 1,
+          col: colPosition + i + 2,
+        },
+        {
+          row: rowPosition - 1,
+          col: colPosition + i + 1,
+        },
+        {
+          row: rowPosition,
+          col: colPosition + i,
+        },
+        {
+          row: rowPosition,
+          col: colPosition + i + 1,
+        },
+      ];
+    } else {
+      arr = [
+        {
+          row: rowPosition - 1,
+          col: colPosition + i + 1,
+        },
+        {
+          row: rowPosition - 1,
+          col: colPosition + i,
+        },
+        {
+          row: rowPosition,
+          col: colPosition + i - 1,
+        },
+        {
+          row: rowPosition,
+          col: colPosition + i,
+        },
+      ];
+    }
   } else if (shapeType === 1) {
+    // 0 1 0
+    // 0 1 1
+    // 0 0 1
     arr = [
       {
         row: rowPosition - 2,
@@ -179,25 +288,52 @@ const blockL = (rowPosition, colPosition, i = 0, shape) => {
   let arr;
   let shapeType = shape % 4;
   if (shapeType === 0) {
-    arr = [
-      {
-        row: rowPosition - 1,
-        col: colPosition + i + 2,
-      },
-      {
-        row: rowPosition,
-        col: colPosition + i,
-      },
-      {
-        row: rowPosition,
-        col: colPosition + i + 1,
-      },
-      {
-        row: rowPosition,
-        col: colPosition + i + 2,
-      },
-    ];
+    // 0 0 1
+    // 1 1 1
+    // 0 0 0
+    if (colPosition === 1) {
+      arr = [
+        {
+          row: rowPosition - 1,
+          col: colPosition + i + 2,
+        },
+        {
+          row: rowPosition,
+          col: colPosition + i,
+        },
+        {
+          row: rowPosition,
+          col: colPosition + i + 1,
+        },
+        {
+          row: rowPosition,
+          col: colPosition + i + 2,
+        },
+      ];
+    } else {
+      arr = [
+        {
+          row: rowPosition - 1,
+          col: colPosition + i + 1,
+        },
+        {
+          row: rowPosition,
+          col: colPosition + i - 1,
+        },
+        {
+          row: rowPosition,
+          col: colPosition + i,
+        },
+        {
+          row: rowPosition,
+          col: colPosition + i + 1,
+        },
+      ];
+    }
   } else if (shapeType === 1) {
+    // 0 1 0
+    // 0 1 0
+    // 0 1 1
     arr = [
       {
         row: rowPosition - 2,
@@ -217,25 +353,52 @@ const blockL = (rowPosition, colPosition, i = 0, shape) => {
       },
     ];
   } else if (shapeType === 2) {
-    arr = [
-      {
-        row: rowPosition,
-        col: colPosition + i,
-      },
-      {
-        row: rowPosition - 1,
-        col: colPosition + i,
-      },
-      {
-        row: rowPosition - 1,
-        col: colPosition + i + 1,
-      },
-      {
-        row: rowPosition - 1,
-        col: colPosition + i + 2,
-      },
-    ];
+    // 1 1 1
+    // 1 0 0
+    // 0 0 0
+    if (colPosition === 1) {
+      arr = [
+        {
+          row: rowPosition,
+          col: colPosition + i,
+        },
+        {
+          row: rowPosition - 1,
+          col: colPosition + i,
+        },
+        {
+          row: rowPosition - 1,
+          col: colPosition + i + 1,
+        },
+        {
+          row: rowPosition - 1,
+          col: colPosition + i + 2,
+        },
+      ];
+    } else {
+      arr = [
+        {
+          row: rowPosition,
+          col: colPosition + i - 1,
+        },
+        {
+          row: rowPosition - 1,
+          col: colPosition + i - 1,
+        },
+        {
+          row: rowPosition - 1,
+          col: colPosition + i,
+        },
+        {
+          row: rowPosition - 1,
+          col: colPosition + i + 1,
+        },
+      ];
+    }
   } else if (shapeType === 3) {
+    // 0 1 1
+    // 0 0 1
+    // 0 0 1
     arr = [
       {
         row: rowPosition - 2,
@@ -262,26 +425,55 @@ const blockL = (rowPosition, colPosition, i = 0, shape) => {
 const blockJ = (rowPosition, colPosition, i = 0, shape) => {
   let arr;
   let shapeType = shape % 4;
+  console.log(colPosition);
+  console.log(shapeType);
   if (shapeType === 0) {
-    arr = [
-      {
-        row: rowPosition - 1,
-        col: colPosition + i,
-      },
-      {
-        row: rowPosition,
-        col: colPosition + i,
-      },
-      {
-        row: rowPosition,
-        col: colPosition + i + 1,
-      },
-      {
-        row: rowPosition,
-        col: colPosition + i + 2,
-      },
-    ];
+    // 1 0 0
+    // 1 1 1
+    // 0 0 0
+    if (colPosition === 9) {
+      arr = [
+        {
+          row: rowPosition - 1,
+          col: colPosition + i - 1,
+        },
+        {
+          row: rowPosition,
+          col: colPosition + i - 1,
+        },
+        {
+          row: rowPosition,
+          col: colPosition + i,
+        },
+        {
+          row: rowPosition,
+          col: colPosition + i + 1,
+        },
+      ];
+    } else {
+      arr = [
+        {
+          row: rowPosition - 1,
+          col: colPosition + i,
+        },
+        {
+          row: rowPosition,
+          col: colPosition + i,
+        },
+        {
+          row: rowPosition,
+          col: colPosition + i + 1,
+        },
+        {
+          row: rowPosition,
+          col: colPosition + i + 2,
+        },
+      ];
+    }
   } else if (shapeType === 1) {
+    // 0 1 1
+    // 0 1 0
+    // 0 1 0
     arr = [
       {
         row: rowPosition - 2,
@@ -301,25 +493,52 @@ const blockJ = (rowPosition, colPosition, i = 0, shape) => {
       },
     ];
   } else if (shapeType === 2) {
-    arr = [
-      {
-        row: rowPosition - 1,
-        col: colPosition + i,
-      },
-      {
-        row: rowPosition - 1,
-        col: colPosition + i + 1,
-      },
-      {
-        row: rowPosition - 1,
-        col: colPosition + i + 2,
-      },
-      {
-        row: rowPosition,
-        col: colPosition + i + 2,
-      },
-    ];
+    // 1 1 1
+    // 0 0 1
+    // 0 0 0
+    if (colPosition === 9) {
+      arr = [
+        {
+          row: rowPosition - 1,
+          col: colPosition + i - 1,
+        },
+        {
+          row: rowPosition - 1,
+          col: colPosition + i,
+        },
+        {
+          row: rowPosition - 1,
+          col: colPosition + i + 1,
+        },
+        {
+          row: rowPosition,
+          col: colPosition + i + 1,
+        },
+      ];
+    } else {
+      arr = [
+        {
+          row: rowPosition - 1,
+          col: colPosition + i,
+        },
+        {
+          row: rowPosition - 1,
+          col: colPosition + i + 1,
+        },
+        {
+          row: rowPosition - 1,
+          col: colPosition + i + 2,
+        },
+        {
+          row: rowPosition,
+          col: colPosition + i + 2,
+        },
+      ];
+    }
   } else if (shapeType === 3) {
+    // 0 0 1
+    // 0 0 1
+    // 0 1 1
     arr = [
       {
         row: rowPosition - 2,
@@ -370,29 +589,78 @@ const blockI = (rowPosition, colPosition, i = 0, shape) => {
   let arr;
   let shapeType = shape % 2;
   if (shapeType === 0) {
-    arr = [
-      {
-        row: rowPosition,
-        col: colPosition + i,
-      },
-      {
-        row: rowPosition,
-        col: colPosition + i + 1,
-      },
-      {
-        row: rowPosition,
-        col: colPosition + i + 2,
-      },
-      {
-        row: rowPosition,
-        col: colPosition + i + 3,
-      },
-    ];
+    // 0 0 0 0
+    // 1 1 1 1
+    // 0 0 0 0
+    // 0 0 0 0
+    if (colPosition === 0) {
+      arr = [
+        {
+          row: rowPosition,
+          col: colPosition + i + 1,
+        },
+        {
+          row: rowPosition,
+          col: colPosition + i + 2,
+        },
+        {
+          row: rowPosition,
+          col: colPosition + i + 3,
+        },
+        {
+          row: rowPosition,
+          col: colPosition + i + 4,
+        },
+      ];
+    } else if (colPosition === 9) {
+      arr = [
+        {
+          row: rowPosition,
+          col: colPosition + i - 2,
+        },
+        {
+          row: rowPosition,
+          col: colPosition + i - 1,
+        },
+        {
+          row: rowPosition,
+          col: colPosition + i,
+        },
+        {
+          row: rowPosition,
+          col: colPosition + i + 1,
+        },
+      ];
+    } else {
+      arr = [
+        {
+          row: rowPosition,
+          col: colPosition + i,
+        },
+        {
+          row: rowPosition,
+          col: colPosition + i + 1,
+        },
+        {
+          row: rowPosition,
+          col: colPosition + i + 2,
+        },
+        {
+          row: rowPosition,
+          col: colPosition + i + 3,
+        },
+      ];
+    }
   } else if (shapeType === 1) {
+    // 0 0 1 0
+    // 0 0 1 0
+    // 0 0 1 0
+    // 0 0 1 0
+
     arr = [
       {
         row: rowPosition - 3,
-        col: colPosition + 1,
+        col: colPosition + i + 1,
       },
       {
         row: rowPosition - 2,
